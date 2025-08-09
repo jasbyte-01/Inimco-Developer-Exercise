@@ -10,8 +10,4 @@
     <ProjectReference Include="..\ProfileAnalyzer.Domain\ProfileAnalyzer.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Repositories\" />
-  </ItemGroup>
-
 </Project>

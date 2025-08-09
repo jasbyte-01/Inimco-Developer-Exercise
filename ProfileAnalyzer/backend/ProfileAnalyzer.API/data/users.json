@@ -1,0 +1,18 @@
+[
+  {
+    "UserId": 384,
+    "FirstName": "Jasper",
+    "LastName": "Wauters",
+    "SocialSkills": [
+      "programming"
+    ],
+    "SocialAccounts": [
+      {
+        "UserId": 384,
+        "SocialAccountId": 266,
+        "Type": "Facebook",
+        "Address": "https://www.google.com"
+      }
+    ]
+  }
+]
