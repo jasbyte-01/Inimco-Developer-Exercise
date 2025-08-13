@@ -1,0 +1,11 @@
+export enum SocialMediaType {
+  Facebook = 'Facebook',
+  Twitter = 'Twitter',
+  Instagram = 'Instagram',
+  LinkedIn = 'LinkedIn',
+  TikTok = 'TikTok',
+  YouTube = 'YouTube',
+  Snapchat = 'Snapchat',
+  Pinterest = 'Pinterest',
+  Reddit = 'Reddit',
+}

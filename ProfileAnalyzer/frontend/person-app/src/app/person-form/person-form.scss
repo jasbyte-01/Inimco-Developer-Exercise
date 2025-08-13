@@ -1,0 +1,30 @@
+form {
+  border: 1px solid #ccc;
+  padding: 20px;
+  margin: 12px auto;
+
+  display: block;
+  max-width: 50vw;
+  mat-form-field {
+    max-width: 50%;
+    display: block;
+  }
+
+  .social-skills {
+    .skill {
+      display: flex;
+      align-items: baseline;
+      column-gap: 12px;
+    }
+  }
+
+  .social-media-item {
+    display: flex;
+    column-gap: 10px;
+    align-items: baseline;
+
+    > * {
+      max-width: 50%;
+    }
+  }
+}

@@ -1,0 +1,63 @@
+<form (ngSubmit)="submitForm()" [formGroup]="formGroup">
+  <h2>Person Form</h2>
+  <!-- Name -->
+  <mat-form-field>
+    <mat-label>Name</mat-label>
+    <input matInput required formControlName="firstName" />
+  </mat-form-field>
+
+  <!-- Last Name -->
+  <mat-form-field>
+    <mat-label>Last Name</mat-label>
+    <input matInput required formControlName="lastName" />
+  </mat-form-field>
+
+  <!-- Social skills -->
+  <div class="social-skills" formArrayName="socialSkills">
+    <h3>Social Skills</h3>
+    <button mat-button color="primary" type="button" (click)="addSkill()">Add Skill</button>
+
+    @for (socialSkill of socialSkillsArray.controls; track $index; let i = $index) {
+    <div class="skill">
+      <mat-form-field>
+        <mat-label>Skill {{ i + 1 }}</mat-label>
+        <input matInput [formControlName]="i" />
+      </mat-form-field>
+      <button mat-icon-button type="button" (click)="removeSkill(i)">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
+    }
+  </div>
+
+  <div class="social-media" formArrayName="socialMedias">
+    <h3>Social media</h3>
+    <button mat-button color="primary" type="button" (click)="addSocialMedia()">
+      Add Social Media
+    </button>
+
+    @for (socialMediaGroup of socialMediasArray.controls; track $index; let i = $index) {
+    <div [formGroupName]="i" class="social-media-item">
+      <mat-form-field>
+        <mat-label>Social media type</mat-label>
+        <mat-select formControlName="type">
+          @for (type of socialMediaTypes; track $index) {
+          <mat-option [value]="type">{{ type }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>URL</mat-label>
+        <input matInput formControlName="url" />
+      </mat-form-field>
+      <button mat-icon-button type="button" (click)="removeSocialMedia(i)">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
+    }
+  </div>
+
+  <button mat-raised-button color="primary" type="submit" [disabled]="!formGroup.valid">
+    Submit
+  </button>
+</form>

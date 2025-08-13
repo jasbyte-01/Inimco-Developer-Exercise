@@ -14,5 +14,21 @@
         "Address": "https://www.google.com"
       }
     ]
+  },
+  {
+    "UserId": 937,
+    "FirstName": "Jasper",
+    "LastName": "Test",
+    "SocialSkills": [
+      "Social"
+    ],
+    "SocialAccounts": [
+      {
+        "UserId": 937,
+        "SocialAccountId": 95,
+        "Type": "Facebook",
+        "Address": "https://www"
+      }
+    ]
   }
 ]

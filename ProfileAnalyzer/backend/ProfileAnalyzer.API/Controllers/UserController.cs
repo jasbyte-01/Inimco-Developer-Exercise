@@ -6,14 +6,12 @@ namespace ProfileAnalyzer.API.Controllers
 {
     [ApiController]
     [Route("api/users")]
-    public class UserController : ControllerBase
+    public class UserController(UserService userService, INameAnalysisService nameAnalysisService)
+        : ControllerBase
     {
-        private readonly UserService _userService;
-
-        public UserController(UserService userService)
-        {
-            _userService = userService ?? throw new ArgumentNullException(nameof(userService));
-        }
+        private readonly UserService _userService =
+            userService ?? throw new ArgumentNullException(nameof(userService));
+        private readonly INameAnalysisService _nameAnalysisService = nameAnalysisService;
 
         [HttpPost]
         public IActionResult CreateUser([FromBody] UserDTO user)
@@ -29,19 +27,20 @@ namespace ProfileAnalyzer.API.Controllers
                 return BadRequest(response.Errors);
             }
 
-            return Ok($"User created successfully with ID: {response.Data}");
-        }
+            string fullName = $"{user.FirstName} {user.LastName}";
+            int numberOfVowels = _nameAnalysisService.CountVowels(fullName);
+            int numberOfConstants = _nameAnalysisService.CountConstants(fullName);
+            string reversedName = _nameAnalysisService.ReverseName(fullName);
 
-        [HttpGet]
-        public IActionResult GetUser(int userId)
-        {
-            UserDTO? user = _userService.GetUser(userId);
-            if (user is null)
-            {
-                return NotFound($"User with ID: {userId} does not exist");
-            }
-
-            return Ok(user);
+            return Ok(
+                new
+                {
+                    Vowels = numberOfVowels,
+                    Consonants = numberOfConstants,
+                    ReversedName = reversedName,
+                    OriginalData = user,
+                }
+            );
         }
     }
 }

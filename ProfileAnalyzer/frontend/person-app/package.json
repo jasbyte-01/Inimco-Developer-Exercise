@@ -1,5 +1,5 @@
 {
-  "name": "profile-analyzer-ui",
+  "name": "person-app",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -9,6 +9,8 @@
     "test": "ng test"
   },
   "prettier": {
+    "printWidth": 100,
+    "singleQuote": true,
     "overrides": [
       {
         "files": "*.html",
@@ -20,19 +22,21 @@
   },
   "private": true,
   "dependencies": {
+    "@angular/animations": "^20.1.6",
+    "@angular/cdk": "^20.1.5",
     "@angular/common": "^20.1.0",
     "@angular/compiler": "^20.1.0",
     "@angular/core": "^20.1.0",
     "@angular/forms": "^20.1.0",
+    "@angular/material": "^20.1.5",
     "@angular/platform-browser": "^20.1.0",
     "@angular/router": "^20.1.0",
     "rxjs": "~7.8.0",
-    "tslib": "^2.3.0",
-    "zone.js": "~0.15.0"
+    "tslib": "^2.3.0"
   },
   "devDependencies": {
-    "@angular/build": "^20.1.5",
-    "@angular/cli": "^20.1.5",
+    "@angular/build": "^20.1.6",
+    "@angular/cli": "^20.1.6",
     "@angular/compiler-cli": "^20.1.0",
     "@types/jasmine": "~5.1.0",
     "jasmine-core": "~5.8.0",
