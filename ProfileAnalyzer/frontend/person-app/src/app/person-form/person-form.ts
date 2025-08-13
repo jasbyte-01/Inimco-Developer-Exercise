@@ -18,7 +18,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { SocialMediaType } from './models/social-media-type';
 import { Person, SocialMedia } from './models/person';
 import { PersonService } from './services/person.service';
-import { take } from 'rxjs';
+import { take, tap } from 'rxjs';
 
 @Component({
   selector: 'app-person-form',
@@ -45,8 +45,8 @@ export class PersonFormComponent {
     this.formGroup = fb.group<UserForm>({
       firstName: fb.control(null, Validators.required),
       lastName: fb.control(null, Validators.required),
-      socialSkills: fb.nonNullable.array<FormControl<string | null>>([]),
-      socialMedias: fb.nonNullable.array<FormGroup<SocialMediaForm>>([]),
+      socialSkills: fb.array<string | null>([], Validators.required),
+      socialMedias: fb.array<FormGroup<SocialMediaForm>>([], Validators.required),
     });
   }
 
@@ -63,24 +63,26 @@ export class PersonFormComponent {
   }
 
   protected removeSkill(index: number) {
-    this.socialSkillsArray.controls.splice(index, 1);
+    this.socialSkillsArray.removeAt(index);
   }
 
   protected addSocialMedia() {
     this.socialMediasArray.push(
       this.fb.group<SocialMediaForm>({
         type: this.fb.control(null, Validators.required),
-        url: this.fb.control(null, [Validators.required, Validators.pattern('https?://.+')]),
+        url: this.fb.control(null, Validators.required),
       })
     );
   }
 
   protected removeSocialMedia(index: number) {
-    this.socialMediasArray.controls.splice(index, 1);
+    this.socialMediasArray.removeAt(index);
   }
 
   protected submitForm() {
     this.formGroup.updateValueAndValidity();
+    this.socialMediasArray.updateValueAndValidity();
+
     if (this.formGroup.valid) {
       const formGroupValue = this.formGroup.getRawValue();
       const person = new Person(
@@ -89,7 +91,16 @@ export class PersonFormComponent {
         formGroupValue.socialSkills.map((skill) => skill!),
         formGroupValue.socialMedias.map((media) => new SocialMedia(media.type!, media.url!))
       );
-      this.personService.addPerson$(person).pipe(take(1)).subscribe();
+      this.personService
+        .addPerson$(person)
+        .pipe(
+          take(1),
+          tap(() => {
+            this.formGroup.reset();
+            this.formGroup.markAsUntouched();
+          })
+        )
+        .subscribe();
     } else {
       this.formGroup.markAllAsTouched();
     }

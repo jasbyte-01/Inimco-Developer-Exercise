@@ -4,7 +4,7 @@ namespace ProfileAnalyzer.Domain.Interfaces
 {
     public interface IRepository
     {
-        int CreateUser(User user);
+        Task<int> CreateUser(User user);
 
         IQueryable<User> Users { get; }
 

@@ -25,7 +25,7 @@ namespace ProfileAnalyzer.Infrastructure.Repositories
 
         public IQueryable<SocialAccount> SocialAccounts => _socialAccounts.AsQueryable();
 
-        public int CreateUser(User user)
+        public async Task<int> CreateUser(User user)
         {
             // Generate a random user ID for demonstration purposes.
             int userId = Random.Shared.Next(1, 1000);
@@ -43,12 +43,7 @@ namespace ProfileAnalyzer.Infrastructure.Repositories
             _socialAccounts.AddRange(user.SocialAccounts);
 
             // Write both files in parallel and wait for both to complete
-            Task writeUsersTask = _fileReader.WriteJsonFileAsync(_userFilePath, _users);
-            Task writeSocialAccountsTask = _fileReader.WriteJsonFileAsync(
-                _socialAccountsFilePath,
-                _socialAccounts
-            );
-            Task.WaitAll(writeUsersTask, writeSocialAccountsTask);
+            await _fileReader.WriteJsonFileAsync(_userFilePath, _users);
 
             return userId;
         }

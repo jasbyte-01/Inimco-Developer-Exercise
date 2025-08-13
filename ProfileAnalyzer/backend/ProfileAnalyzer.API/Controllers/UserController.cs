@@ -14,14 +14,14 @@ namespace ProfileAnalyzer.API.Controllers
         private readonly INameAnalysisService _nameAnalysisService = nameAnalysisService;
 
         [HttpPost]
-        public IActionResult CreateUser([FromBody] UserDTO user)
+        public async Task<IActionResult> CreateUser([FromBody] UserDTO user)
         {
             if (user is null)
             {
                 return BadRequest("User data cannot be null");
             }
 
-            ApiResponse<int> response = _userService.CreateUser(user);
+            ApiResponse<int> response = await _userService.CreateUser(user);
             if (response.IsFailure)
             {
                 return BadRequest(response.Errors);

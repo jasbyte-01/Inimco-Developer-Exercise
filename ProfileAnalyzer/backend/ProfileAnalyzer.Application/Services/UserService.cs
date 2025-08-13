@@ -11,7 +11,7 @@ namespace ProfileAnalyzer.Application.Services
         private readonly IRepository _repository =
             repository ?? throw new ArgumentNullException(nameof(repository));
 
-        public ApiResponse<int> CreateUser(UserDTO userDto)
+        public async Task<ApiResponse<int>> CreateUser(UserDTO userDto)
         {
             List<BaseValidationError> validationErrors = UserValidator.Validate(userDto);
             if (validationErrors.Count != 0)
@@ -33,8 +33,8 @@ namespace ProfileAnalyzer.Application.Services
                 ),
             };
 
-            return ApiResponse<int>.Success(_repository.CreateUser(user));
-            ;
+            int userId = await _repository.CreateUser(user);
+            return ApiResponse<int>.Success(userId);
         }
     }
 }
