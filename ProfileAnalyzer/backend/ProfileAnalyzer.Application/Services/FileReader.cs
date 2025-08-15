@@ -9,6 +9,7 @@ namespace ProfileAnalyzer.Application.Services
 
         public async Task<T?> ReadJsonFileAsync<T>(string filePath)
         {
+            // If file exists return the content other wise return null
             if (File.Exists(filePath))
             {
                 string? jsonContent = await File.ReadAllTextAsync(filePath);
@@ -23,12 +24,14 @@ namespace ProfileAnalyzer.Application.Services
 
         public async Task WriteJsonFileAsync<T>(string filePath, T content)
         {
+            // Create the folder if it does not exist
             string? directory = Path.GetDirectoryName(filePath);
             if (!string.IsNullOrEmpty(directory) && !Directory.Exists(directory))
             {
                 Directory.CreateDirectory(directory);
             }
 
+            // Convert the data into a JSON string
             string jsonContent = System.Text.Json.JsonSerializer.Serialize(
                 content,
                 CachedJsonOptions

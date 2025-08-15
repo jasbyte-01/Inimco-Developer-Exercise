@@ -13,6 +13,7 @@ namespace ProfileAnalyzer.Application.Services
 
         public async Task<ApiResponse<int>> CreateUser(UserDTO userDto)
         {
+            // Validate the user data
             List<BaseValidationError> validationErrors = UserValidator.Validate(userDto);
             if (validationErrors.Count != 0)
             {
@@ -33,6 +34,7 @@ namespace ProfileAnalyzer.Application.Services
                 ),
             };
 
+            // Create the user in the repository
             int userId = await _repository.CreateUser(user);
             return ApiResponse<int>.Success(userId);
         }

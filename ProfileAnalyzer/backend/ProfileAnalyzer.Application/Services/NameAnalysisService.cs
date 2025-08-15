@@ -1,11 +1,7 @@
-﻿namespace ProfileAnalyzer.Application.Services
+﻿using ProfileAnalyzer.Domain.Interfaces;
+
+namespace ProfileAnalyzer.Application.Services
 {
-    public interface INameAnalysisService
-    {
-        int CountVowels(string name);
-        int CountConstants(string name);
-        string ReverseName(string name);
-    }
 
     public class NameAnalysisService : INameAnalysisService
     {
@@ -18,11 +14,13 @@
 
         public int CountConstants(string name)
         {
+            // Check if it is a letter and if it is a letter and not occuring in the vowels is it a constant
             return name.ToLower().Count(c => char.IsLetter(c) && !vowels.Contains(c));
         }
 
         public string ReverseName(string name)
         {
+            // Split the name by spaces and reverse each word
             List<string> words =
             [
                 .. name.Split(' ').Select(word => new string([.. word.Reverse()])),
