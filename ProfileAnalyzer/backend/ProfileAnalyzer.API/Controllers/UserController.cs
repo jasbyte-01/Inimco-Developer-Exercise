@@ -1,15 +1,17 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ProfileAnalyzer.API.ViewModels;
 using ProfileAnalyzer.Application.DTOs;
 using ProfileAnalyzer.Application.Services;
+using ProfileAnalyzer.Domain.Interfaces;
 
 namespace ProfileAnalyzer.API.Controllers
 {
     [ApiController]
     [Route("api/users")]
-    public class UserController(UserService userService, INameAnalysisService nameAnalysisService)
+    public class UserController(IUserService userService, INameAnalysisService nameAnalysisService)
         : ControllerBase
     {
-        private readonly UserService _userService =
+        private readonly IUserService _userService =
             userService ?? throw new ArgumentNullException(nameof(userService));
         private readonly INameAnalysisService _nameAnalysisService = nameAnalysisService;
 
@@ -33,7 +35,7 @@ namespace ProfileAnalyzer.API.Controllers
             string reversedName = _nameAnalysisService.ReverseName(fullName);
 
             return Ok(
-                new
+                new CreateUserResultViewModel
                 {
                     Vowels = numberOfVowels,
                     Consonants = numberOfConstants,

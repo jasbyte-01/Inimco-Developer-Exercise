@@ -6,7 +6,12 @@ using ProfileAnalyzer.Domain.Interfaces;
 
 namespace ProfileAnalyzer.Application.Services
 {
-    public class UserService(IRepository repository)
+    public interface IUserService
+    {
+        Task<ApiResponse<int>> CreateUser(UserDTO userDto);
+    }
+
+    public class UserService(IRepository repository) : IUserService
     {
         private readonly IRepository _repository =
             repository ?? throw new ArgumentNullException(nameof(repository));

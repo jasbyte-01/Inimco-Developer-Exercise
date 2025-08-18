@@ -27,7 +27,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IRepository, Repository>();
 builder.Services.AddScoped<IFileReader, FileReader>();
 builder.Services.AddScoped<INameAnalysisService, NameAnalysisService>();
-builder.Services.AddScoped<UserService>();
+builder.Services.AddScoped<IUserService, UserService>();
 
 // Configure JSON formatting to match requirements
 builder.Services.Configure<JsonOptions>(options =>

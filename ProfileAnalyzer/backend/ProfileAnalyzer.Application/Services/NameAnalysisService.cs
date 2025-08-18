@@ -2,7 +2,6 @@
 
 namespace ProfileAnalyzer.Application.Services
 {
-
     public class NameAnalysisService : INameAnalysisService
     {
         private static readonly List<char> vowels = ['a', 'e', 'i', 'o', 'u', 'y'];
@@ -20,6 +19,11 @@ namespace ProfileAnalyzer.Application.Services
 
         public string ReverseName(string name)
         {
+            if (string.IsNullOrEmpty(name))
+            {
+                return string.Empty;
+            }
+
             // Split the name by spaces and reverse each word
             List<string> words =
             [
