@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\backend\ProfileAnalyzer.API\ProfileAnalyzer.API.csproj" />
+    <ProjectReference Include="..\ProfileAnalyzer.API\ProfileAnalyzer.API.csproj" />
   </ItemGroup>
 
 </Project>
