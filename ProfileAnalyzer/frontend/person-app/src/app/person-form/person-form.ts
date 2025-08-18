@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import {
   FormArray,
   FormBuilder,
@@ -35,9 +35,10 @@ import { take, tap } from 'rxjs';
   ],
   templateUrl: './person-form.html',
   styleUrl: './person-form.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PersonFormComponent {
-  protected readonly formGroup: FormGroup<UserForm>;
+  public readonly formGroup: FormGroup<UserForm>;
   protected readonly socialMediaTypes: SocialMediaType[];
 
   constructor(private fb: FormBuilder, private personService: PersonService) {
@@ -50,23 +51,23 @@ export class PersonFormComponent {
     });
   }
 
-  protected get socialSkillsArray(): FormArray<FormControl<string | null>> {
+  public get socialSkillsArray(): FormArray<FormControl<string | null>> {
     return this.formGroup.get('socialSkills') as FormArray<FormControl<string | null>>;
   }
 
-  protected get socialMediasArray(): FormArray<FormGroup<SocialMediaForm>> {
+  public get socialMediasArray(): FormArray<FormGroup<SocialMediaForm>> {
     return this.formGroup.get('socialMedias') as FormArray<FormGroup<SocialMediaForm>>;
   }
 
-  protected addSkill() {
+  public addSkill() {
     this.socialSkillsArray.push(this.fb.control(null, Validators.required));
   }
 
-  protected removeSkill(index: number) {
+  public removeSkill(index: number) {
     this.socialSkillsArray.removeAt(index);
   }
 
-  protected addSocialMedia() {
+  public addSocialMedia() {
     this.socialMediasArray.push(
       this.fb.group<SocialMediaForm>({
         type: this.fb.control(null, Validators.required),
@@ -75,13 +76,13 @@ export class PersonFormComponent {
     );
   }
 
-  protected removeSocialMedia(index: number) {
+  public removeSocialMedia(index: number) {
     this.socialMediasArray.removeAt(index);
   }
 
-  protected submitForm() {
+  public submitForm() {
+    debugger;
     this.formGroup.updateValueAndValidity();
-    this.socialMediasArray.updateValueAndValidity();
 
     if (this.formGroup.valid) {
       const formGroupValue = this.formGroup.getRawValue();
