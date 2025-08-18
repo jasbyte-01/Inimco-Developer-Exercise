@@ -13,9 +13,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProfileAnalyzer.Infrastruct
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProfileAnalyzer.API.Tests", "ProfileAnalyzer.API.Tests\ProfileAnalyzer.API.Tests.csproj", "{9AE934F9-BFE3-49BD-9F5C-46231D58493E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProfileAnalyzer.API.Tests", "backend\ProfileAnalyzer.API.Tests\ProfileAnalyzer.API.Tests.csproj", "{9AE934F9-BFE3-49BD-9F5C-46231D58493E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProfileAnalyzer.Application.Tests", "ProfileAnalyzer.Application.Tests\ProfileAnalyzer.Application.Tests.csproj", "{B189054D-2A4A-4DF1-8FFE-682F0334CC8D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProfileAnalyzer.Application.Tests", "backend\ProfileAnalyzer.Application.Tests\ProfileAnalyzer.Application.Tests.csproj", "{B189054D-2A4A-4DF1-8FFE-682F0334CC8D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
