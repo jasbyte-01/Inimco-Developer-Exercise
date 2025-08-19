@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Text.Json;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using ProfileAnalyzer.API.ViewModels;
 using ProfileAnalyzer.Application.DTOs;
 using ProfileAnalyzer.Application.Services;
@@ -8,12 +10,18 @@ namespace ProfileAnalyzer.API.Controllers
 {
     [ApiController]
     [Route("api/users")]
-    public class UserController(IUserService userService, INameAnalysisService nameAnalysisService)
-        : ControllerBase
+    public class UserController(
+        IUserService userService,
+        INameAnalysisService nameAnalysisService,
+        ILogger<UserController> logger,
+        IOptions<JsonSerializerOptions> jsonOptions
+    ) : ControllerBase
     {
         private readonly IUserService _userService =
             userService ?? throw new ArgumentNullException(nameof(userService));
         private readonly INameAnalysisService _nameAnalysisService = nameAnalysisService;
+        private readonly ILogger<UserController> _logger = logger;
+        private readonly JsonSerializerOptions _jsonOptions = jsonOptions.Value;
 
         [HttpPost]
         public async Task<IActionResult> CreateUser([FromBody] UserDTO user)
@@ -33,16 +41,19 @@ namespace ProfileAnalyzer.API.Controllers
             int numberOfVowels = _nameAnalysisService.CountVowels(fullName);
             int numberOfConstants = _nameAnalysisService.CountConstants(fullName);
             string reversedName = _nameAnalysisService.ReverseName(fullName);
+            CreateUserResultViewModel result = new()
+            {
+                Vowels = numberOfVowels,
+                Consonants = numberOfConstants,
+                ReversedName = reversedName,
+                OriginalData = user,
+            };
 
-            return Ok(
-                new CreateUserResultViewModel
-                {
-                    Vowels = numberOfVowels,
-                    Consonants = numberOfConstants,
-                    ReversedName = reversedName,
-                    OriginalData = user,
-                }
+            _logger.LogInformation(
+                "JSON response: \n{JsonResponse}",
+                JsonSerializer.Serialize(result, _jsonOptions)
             );
+            return Ok(result);
         }
     }
 }

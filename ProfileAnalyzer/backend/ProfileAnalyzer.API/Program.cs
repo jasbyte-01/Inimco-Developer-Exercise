@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Mvc;
+using System.Text.Json;
 using ProfileAnalyzer.Application.Services;
 using ProfileAnalyzer.Domain.Interfaces;
 using ProfileAnalyzer.Infrastructure.Repositories;
@@ -19,7 +19,13 @@ builder.Services.AddCors(options =>
     );
 });
 
-builder.Services.AddControllers();
+builder
+    .Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.WriteIndented = true;
+        options.JsonSerializerOptions.PropertyNamingPolicy = null;
+    });
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -30,10 +36,9 @@ builder.Services.AddScoped<INameAnalysisService, NameAnalysisService>();
 builder.Services.AddScoped<IUserService, UserService>();
 
 // Configure JSON formatting to match requirements
-builder.Services.Configure<JsonOptions>(options =>
+builder.Services.Configure<JsonSerializerOptions>(options =>
 {
-    options.JsonSerializerOptions.WriteIndented = true;
-    options.JsonSerializerOptions.PropertyNamingPolicy = null; // Maintain PascalCase
+    options.WriteIndented = true;
 });
 
 var app = builder.Build();
