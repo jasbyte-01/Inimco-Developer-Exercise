@@ -81,7 +81,6 @@ export class PersonFormComponent {
   }
 
   public submitForm() {
-    debugger;
     this.formGroup.updateValueAndValidity();
 
     if (this.formGroup.valid) {
@@ -98,7 +97,6 @@ export class PersonFormComponent {
           take(1),
           tap(() => {
             this.formGroup.reset();
-            this.formGroup.markAsUntouched();
           })
         )
         .subscribe();
